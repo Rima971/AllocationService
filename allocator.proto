@@ -3,8 +3,9 @@ option go_package = "github.com/rima971/allocator";
 package deliveryAgentAllocator;
 
 message DeliveryAgent {
-  int32 UserId = 1;
-  int32 CurrentLocationPincode = 2;
+  int32 id = 1;
+  int32 UserId = 2;
+  int32 CurrentLocationPincode = 3;
 }
 
 message AllocatorRequest {
