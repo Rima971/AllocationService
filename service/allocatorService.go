@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"github.com/rima971/allocator/adapter"
 	pb "github.com/rima971/allocator/allocator"
 )
 
@@ -14,18 +15,14 @@ func NewDeliveryAgentAllocatorService() *DeliveryAgentAllocatorService {
 	return &DeliveryAgentAllocatorService{}
 }
 
-func fetchAllDeliveryAgents(pincode int32) ([]pb.DeliveryAgent, error) {
-	return nil, errors.New("fetch request for delivery agents failed")
-}
-
 func (d *DeliveryAgentAllocatorService) Allocate(ctx context.Context, in *pb.AllocatorRequest) (*pb.AllocatorResponse, error) {
-	res, err := fetchAllDeliveryAgents(in.GetDeliveryLocationPincode())
+	res, err := adapter.FetchNearestDeliveryAgents(in.GetDeliveryLocationPincode())
 	if err != nil {
 		return nil, err
 	}
 
 	if len(res) == 0 {
-		return nil, errors.New("No delivery agent available at the moment at the given location")
+		return nil, errors.New("no delivery agent available at the moment at the given location")
 	}
 
 	da := res[0]
