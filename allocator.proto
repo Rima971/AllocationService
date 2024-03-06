@@ -1,0 +1,20 @@
+syntax = "proto3";
+option go_package = "github.com/rima971/allocator";
+package deliveryAgentAllocator;
+
+message DeliveryAgent {
+  int32 UserId = 1;
+  int32 CurrentLocationPincode = 2;
+}
+
+message AllocatorRequest {
+  int32 deliveryLocationPincode = 1;
+}
+
+message AllocatorResponse {
+  DeliveryAgent deliveryAgent = 1;
+}
+
+service DeliveryAgentAllocatorService {
+  rpc allocate(AllocatorRequest) returns (AllocatorResponse);
+}
